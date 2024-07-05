@@ -8,10 +8,13 @@
     "start": "next start",
     "lint": "next lint",
     "migrate:dev": "prisma migrate dev --name init",
-    "prisma:generate": "prisma generate"
+    "prisma:generate": "prisma generate",
+    "prisma:format": "prisma format",
+    "prisma:studio":"prisma studio",
+    "prisma:seed": "prisma db seed"
   },
-  "prisma":{
-    "seed":"ts-node prisma/seed.ts"
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.16.1",
@@ -22,7 +25,8 @@
     "next": "14.2.4",
     "prisma": "^5.16.1",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
     "@types/node": "^20",

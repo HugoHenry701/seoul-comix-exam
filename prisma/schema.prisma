@@ -11,16 +11,23 @@ generator client {
 }
 
 model Restaurant {
-        rating Int?
-        rating_count Int?
-        category String?
-        city String?
-        desc String?
-        id String  @id @default(uuid())
-        images String[]
-        name String?
-        price_range String?
-        featuredtext String?
-        featuredicon String?
-        @@map(name: "restaurant")
+  rating       Int?
+  rating_count Int?
+  category     String?
+  city         String?
+  desc         String?
+  id           String   @id @default(uuid())
+  images       String[]
+  name         String?
+  price_range  String?
+  featuredId   String   @unique
+  featured     Feature? @relation(fields: [featuredId], references: [id])
+  isFavorite   Boolean  @default(false)
+}
+
+model Feature {
+  id         String      @id @default(uuid())
+  text       String?
+  icon       String?
+  Restaurant Restaurant?
 }

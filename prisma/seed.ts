@@ -2,7 +2,7 @@ import { PrismaClient, Prisma } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-const userData: Prisma.RestaurantCreateInput[] = [
+const restaurantData: Prisma.RestaurantCreateInput[] = [
     {
         "rating": 4.2,
         "rating_count": 139,
@@ -18,8 +18,10 @@ const userData: Prisma.RestaurantCreateInput[] = [
         "name": "카구라자카 이시카와 스시하루 나카노시마 스시야 카구라자카 이시카와 스시하루 나카노시마 스시야",
         "price_range": "3~5",
         "featured": {
-            "text": "나카노시마×야키토리 상위 맛집",
-            "icon": "stars-02"
+            create: {
+                "text": "나카노시마×야키토리 상위 맛집",
+                "icon": "stars-02",
+            },
         },
         "isFavorite": true
     },
@@ -38,8 +40,10 @@ const userData: Prisma.RestaurantCreateInput[] = [
         "name": "스시 긴자 이시카와",
         "price_range": "4~6",
         "featured": {
-            "text": "도쿄의 상위 스시 맛집",
-            "icon": "stars-02"
+            create: {
+                "text": "도쿄의 상위 스시 맛집",
+                "icon": "stars-02",
+            },
         },
         "isFavorite": false
     },
@@ -58,8 +62,10 @@ const userData: Prisma.RestaurantCreateInput[] = [
         "name": "라멘 이치란",
         "price_range": "2~4",
         "featured": {
-            "text": "교토의 라멘 명소",
-            "icon": "stars-02"
+            create: {
+                "text": "교토의 라멘 명소",
+                "icon": "stars-02"
+            }
         },
         "isFavorite": true
     },
@@ -78,8 +84,10 @@ const userData: Prisma.RestaurantCreateInput[] = [
         "name": "텐푸라 마츠야",
         "price_range": "3~5",
         "featured": {
-            "text": "나고야 최고의 텐푸라집",
-            "icon": "stars-02"
+            create: {
+                "text": "나고야 최고의 텐푸라집",
+                "icon": "stars-02"
+            }
         },
         "isFavorite": false
     },
@@ -98,8 +106,10 @@ const userData: Prisma.RestaurantCreateInput[] = [
         "name": "우동 타로",
         "price_range": "2~4",
         "featured": {
-            "text": "후쿠오카 우동 맛집",
-            "icon": "stars-02"
+            create: {
+                "text": "후쿠오카 우동 맛집",
+                "icon": "stars-02"
+            }
         },
         "isFavorite": true
     },
@@ -118,8 +128,10 @@ const userData: Prisma.RestaurantCreateInput[] = [
         "name": "야키토리 하치베",
         "price_range": "1~3",
         "featured": {
-            "text": "오사카 야키토리 숨은 맛집",
-            "icon": "stars-02"
+            create: {
+                "text": "오사카 야키토리 숨은 맛집",
+                "icon": "stars-02"
+            }
         },
         "isFavorite": false
     },
@@ -138,8 +150,10 @@ const userData: Prisma.RestaurantCreateInput[] = [
         "name": "스시 사토",
         "price_range": "4~6",
         "featured": {
-            "text": "삿포로 스시 맛집",
-            "icon": "stars-02"
+            create: {
+                "text": "삿포로 스시 맛집",
+                "icon": "stars-02"
+            }
         },
         "isFavorite": true
     },
@@ -158,8 +172,10 @@ const userData: Prisma.RestaurantCreateInput[] = [
         "name": "라멘 타츠야",
         "price_range": "2~4",
         "featured": {
-            "text": "히로시마 라멘 추천",
-            "icon": "stars-02"
+            create: {
+                "text": "히로시마 라멘 추천",
+                "icon": "stars-02"
+            }
         },
         "isFavorite": false
     },
@@ -178,8 +194,10 @@ const userData: Prisma.RestaurantCreateInput[] = [
         "name": "텐푸라 야마구치",
         "price_range": "5~7",
         "featured": {
-            "text": "요코하마 텐푸라 추천",
-            "icon": "stars-02"
+            create: {
+                "text": "요코하마 텐푸라 추천",
+                "icon": "stars-02"
+            }
         },
         "isFavorite": true
     },
@@ -198,30 +216,33 @@ const userData: Prisma.RestaurantCreateInput[] = [
         "name": "우동 가게야마",
         "price_range": "2~4",
         "featured": {
-            "text": "고베 우동 맛집",
-            "icon": "stars-02"
+            create: {
+                "text": "고베 우동 맛집",
+                "icon": "stars-02"
+            }
         },
+        
         "isFavorite": false
     }
 ]
 
 async function main() {
-  console.log(`Start seeding ...`)
-  for (const u of userData) {
-    const user = await prisma.user.create({
-      data: u,
-    })
-    console.log(`Created user with id: ${user.id}`)
-  }
-  console.log(`Seeding finished.`)
+    console.log(`Start seeding ...`)
+    for (const u of restaurantData) {
+        const restaurant = await prisma.restaurant.create({
+            data: u,
+        })
+        console.log(`Created restaurant with id: ${restaurant.id}`)
+    }
+    console.log(`Seeding finished.`)
 }
 
 main()
-  .then(async () => {
-    await prisma.$disconnect()
-  })
-  .catch(async (e) => {
-    console.error(e)
-    await prisma.$disconnect()
-    process.exit(1)
-  })
+    .then(async () => {
+        await prisma.$disconnect()
+    })
+    .catch(async (e) => {
+        console.error(e)
+        await prisma.$disconnect()
+        process.exit(1)
+    })
