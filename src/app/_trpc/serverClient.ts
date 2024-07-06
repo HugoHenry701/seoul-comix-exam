@@ -1,6 +1,6 @@
-import { httpBatchLink } from "@trpc/client";
-import {appRouter} from '@/server';
-import { server } from "@/server/trpc";
+import { httpBatchLink } from '@trpc/client';
+import { appRouter } from '@/server';
+import { server } from '@/server/trpc';
 
 // export const serverClient = appRouter.createCaller({
 //      links:[
@@ -10,4 +10,4 @@ import { server } from "@/server/trpc";
 //      ]
 // })
 const createCaller = server.createCallerFactory(appRouter);
-export const serverClient = createCaller({})
+export const serverClient = createCaller({});

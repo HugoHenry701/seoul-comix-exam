@@ -3,7 +3,7 @@ import { getTodosController } from './controller/todos/todo.controller';
 import { router } from './trpc';
 
 export const appRouter = router({
-  getAllRestaurant: getAllRestaurantController,
+  getRestaurants: getAllRestaurantController,
   getTodos: getTodosController,
 });
 export type AppRouter = typeof appRouter;
