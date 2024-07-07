@@ -10,6 +10,14 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  .headerTop {
+    position: fixed;
+    top: 0px;
+    transition: all 0.3s ease;
+  }
+  .closeHeader {
+    transform: translateY(-150%);
+  }
 }
 
 @layer utilities {
@@ -26,11 +34,5 @@ body {
   .no-scrollbar {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
-  }
-}
-@layer utilities {
-  .text-nowrap-ios {
-    flex: 1 0 auto;
-    -webkit-flex: 1 1 auto;
   }
 }

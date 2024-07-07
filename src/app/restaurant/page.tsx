@@ -8,8 +8,8 @@ const RestaurantList = dynamic(
 );
 export default function RestaurantPage() {
   return (
-    <main className="max-w-7xl sm:mx-auto mx-4 my-4 mt-5">
+    <div className="max-w-7xl sm:mx-auto mx-4 my-4 mt-5">
       <RestaurantList />
-    </main>
+    </div>
   );
 }

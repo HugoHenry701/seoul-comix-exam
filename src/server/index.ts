@@ -1,9 +1,11 @@
-import { getAllRestaurantController } from './controller/restaurant/restaurant.controller';
-import { getTodosController } from './controller/todos/todo.controller';
+import {
+  getAllRestaurantController,
+  addFavoriteRestaurantController,
+} from './controller/restaurant/restaurant.controller';
 import { router } from './trpc';
 
 export const appRouter = router({
   getRestaurants: getAllRestaurantController,
-  getTodos: getTodosController,
+  addFavorite: addFavoriteRestaurantController,
 });
 export type AppRouter = typeof appRouter;

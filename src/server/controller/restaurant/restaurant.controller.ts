@@ -41,3 +41,21 @@ export const getAllRestaurantController = publicProcedure
     );
     return listRestaurant;
   });
+export const addFavoriteRestaurantController = publicProcedure
+  .input(
+    yup.object({
+      restaurant_id: yup.string().required(),
+    })
+  )
+  .query(async ({ input }) => {
+    const restaurant_id = input.restaurant_id;
+    await prisma.restaurant.update({
+      where: {
+        id: restaurant_id,
+      },
+      data: {
+        isFavorite: true,
+      },
+    });
+    return true;
+  });
