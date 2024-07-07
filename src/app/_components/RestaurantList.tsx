@@ -1,21 +1,49 @@
+'use client';
 import dynamic from 'next/dynamic';
-import { serverClient } from '../_trpc/serverClient';
 import { textByStoreCategory, STORE_CATEGORY } from '@/app/_configs/categories';
 import Image from 'next/image';
+import SkeletonImage from './skeleton/SkeletonImage';
+import { trpc } from '../_trpc/client';
+import { serverClient } from '../_trpc/serverClient';
 const ImageGallery = dynamic(
-  () => import('@/app/_components/image-gallery/ImageGallery'),
+  () =>
+    import('@/app/_components/image-gallery/ImageGallery').then(
+      (mod) => mod.default
+    ),
   {
     ssr: false,
+    loading: () => (
+      <SkeletonImage
+        heightClass="h-[350px] sm:h-[450px]"
+        widthClass="w-[330px] sm:w-[371px]"
+        className="rounded-2xl"
+      />
+    ),
   }
 );
+const FavoriteClick = dynamic(() => import('@/app/_components/FavoriteClick'), {
+  ssr: false,
+});
 const CategoryTabs = dynamic(() => import('./CategoryTabs'), {
   ssr: false,
 });
-export default async function RestaurantList() {
-  const restaurantList = await serverClient.getRestaurants({
-    page_num: 1,
-    page_size: 10,
-  });
+export default function RestaurantList({
+  initialRestaurantList,
+}: {
+  initialRestaurantList: Awaited<
+    ReturnType<(typeof serverClient)['getRestaurants']>
+  >;
+}) {
+  const getListRestaurant = trpc.getRestaurants.useQuery(
+    {
+      page_num: 1,
+      page_size: 10,
+    },
+    {
+      initialData: initialRestaurantList,
+    }
+  );
+  const restaurantList = getListRestaurant.data;
   return (
     <div>
       <div className="p-1 px-4 gap-2 border rounded-xl my-4 shadow-md flex flex-row">
@@ -40,33 +68,13 @@ export default async function RestaurantList() {
             {restaurantList.map((restaurant, i) => (
               <div key={i} className="border p-2 px-4 rounded-2xl shadow-md ">
                 <div className="my-3 flex justify-between text-sm relative">
-                  {restaurant.isFavorite ? (
-                    <button className="absolute right-4 top-4 bg-pink-300/[45%] p-2 rounded-full backdrop-blur-sm">
-                      <Image
-                        src="/assets/images/heart-rounded-liked.svg"
-                        alt="heart"
-                        className="w-full"
-                        width={20}
-                        height={20}
-                      />
-                    </button>
-                  ) : (
-                    <button className="absolute right-4 top-4 bg-[#FFFFFF]/[25%] p-2 rounded-full backdrop-blur-sm">
-                      <Image
-                        src="/assets/images/heart-rounded.svg"
-                        alt="heart"
-                        className="w-full"
-                        width={20}
-                        height={20}
-                      />
-                    </button>
-                  )}
-                  <Image
-                    src={restaurant.images[0]}
-                    alt=""
-                    className="h-[350px] rounded-2xl object-cover sm:h-[450px] w-full "
-                    width={358}
-                    height={200}
+                  <FavoriteClick
+                    isFavorite={restaurant.isFavorite}
+                    restaurant_id={restaurant.id}
+                  />
+                  <ImageGallery
+                    listImages={restaurant.images}
+                    className='className="h-[350px] rounded-2xl object-cover sm:h-[450px] w-full "'
                   />
                 </div>
                 <a href="#" className="group block " key={i}>
@@ -78,7 +86,7 @@ export default async function RestaurantList() {
                       height={12}
                     />
                     {restaurant.featured && (
-                      <p className="text-gray-900 text-[12px] text-[#FF692E] truncate max-w-48">
+                      <p className=" text-[12px] text-[#FF692E] truncate max-w-48">
                         {restaurant.featured.text}
                       </p>
                     )}

@@ -36,3 +36,35 @@ body {
     scrollbar-width: none; /* Firefox */
   }
 }
+
+.swiper-pagination {
+  background-color: linear-gradient(to left, black, white) !important;
+  -webkit-background-color: linear-gradient(to left, black, white) !important;
+  backdrop-filter: invert(25%);
+  -webkit-backdrop-filter: invert(25%);
+  border-radius: 25px;
+  -webkit-border-radius: 25px;
+  width: 25% !important;
+  -webkit-width: 25% !important;
+  left: 140px !important;
+  -webkit-left: 140px !important;
+  position: absolute !important;
+  -webkit-position: absolute !important;
+}
+.swiper-pagination-bullet {
+  width: 10px !important;
+  height: 10px !important;
+  background-color: #FFFFFF/25 !important;
+  -webkit-background-color: #FFFFFF/25 !important;
+  margin: 0 2px !important;
+  opacity: 1;
+  border-radius: 0;
+  &.swiper-pagination-bullet-active {
+    background-color: #ffffff !important;
+    -webkit-background-color: #ffffff !important;
+  }
+}
+.swiper-pagination-bullet-active {
+  background-color: #ffffff !important;
+  -webkit-background-color: #ffffff !important;
+}

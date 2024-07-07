@@ -1,4 +1,3 @@
-import { redisGet, redisSet } from '@/server/middleware/redis-services';
 import { publicProcedure } from '@/server/trpc';
 import { Feature, PrismaClient, Restaurant } from '@prisma/client';
 import * as yup from 'yup';
@@ -15,12 +14,7 @@ export const getAllRestaurantController = publicProcedure
     const limit = input.page_size;
     const offset = input.page_size * (input.page_num - 1);
     const keyword = input.search;
-    const caching: (Restaurant & { featured: Feature })[] = await redisGet(
-      `getAllRestaurantController-${limit}-${offset}-${keyword}`
-    );
-    if (caching) {
-      return caching;
-    }
+
     const listRestaurant = await prisma.restaurant.findMany({
       relationLoadStrategy: 'join',
       include: {
@@ -34,28 +28,28 @@ export const getAllRestaurantController = publicProcedure
       skip: offset,
       take: limit,
     });
-    redisSet(
-      `getAllRestaurantController-${limit}-${offset}-${keyword}`,
-      listRestaurant,
-      86400
-    );
+
     return listRestaurant;
   });
 export const addFavoriteRestaurantController = publicProcedure
   .input(
     yup.object({
       restaurant_id: yup.string().required(),
+      crr_favorite: yup.boolean().required(),
     })
   )
-  .query(async ({ input }) => {
+  .mutation(async ({ input }) => {
     const restaurant_id = input.restaurant_id;
-    await prisma.restaurant.update({
+    const crr_favorite = input.crr_favorite;
+
+    const result = await prisma.restaurant.update({
       where: {
         id: restaurant_id,
       },
       data: {
-        isFavorite: true,
+        isFavorite: crr_favorite,
       },
     });
-    return true;
+
+    return result;
   });

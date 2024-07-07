@@ -1,11 +1,10 @@
 'use client';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Navigation } from 'swiper/modules';
+import { Autoplay, Pagination } from 'swiper/modules';
 // Import Swiper styles
 import 'swiper/css';
-import 'swiper/css/navigation';
-import { Each } from '../elements/Each';
+import 'swiper/css/pagination';
 import Image from 'next/image';
 
 export default function ImageGallery({
@@ -22,25 +21,23 @@ export default function ImageGallery({
           slidesPerView={1}
           spaceBetween={0}
           direction="horizontal"
-          navigation
-          modules={[Autoplay, Navigation]}
+          modules={[Autoplay, Pagination]}
+          pagination={{
+            clickable: true,
+          }}
+          loop={true}
         >
-          {
-            <Each
-              of={listImages}
-              render={(image) => (
-                <SwiperSlide>
-                  <Image
-                    src={image}
-                    alt=""
-                    className={className}
-                    width={1887}
-                    height={1510}
-                  />
-                </SwiperSlide>
-              )}
-            />
-          }
+          {listImages.map((e, i) => (
+            <SwiperSlide key={i}>
+              <Image
+                src={e}
+                alt=""
+                className={className}
+                width={1887}
+                height={1510}
+              />
+            </SwiperSlide>
+          ))}
         </Swiper>
       ) : (
         <></>
