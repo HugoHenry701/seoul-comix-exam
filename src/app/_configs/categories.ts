@@ -1,4 +1,5 @@
 export enum STORE_CATEGORY {
+  ALL = 'ALL',
   SUSHI = 'SUSHI',
   UNAGI = 'UNAGI',
   TEMPURA = 'TEMPURA',
@@ -23,6 +24,7 @@ export enum STORE_CATEGORY {
 }
 
 export const textByStoreCategory = {
+  [STORE_CATEGORY.ALL]: '모두',
   [STORE_CATEGORY.SUSHI]: '스시·해산물',
   [STORE_CATEGORY.UNAGI]: '장어',
   [STORE_CATEGORY.TEMPURA]: '덴푸라',

@@ -8,13 +8,23 @@ export const getAllRestaurantController = publicProcedure
       page_num: yup.number().min(1).required(),
       page_size: yup.number().min(1).required(),
       search: yup.string(),
+      category: yup.string(),
     })
   )
   .query(async ({ input }) => {
     const limit = input.page_size;
     const offset = input.page_size * (input.page_num - 1);
     const keyword = input.search;
+    const category = input.category || 'ALL';
 
+    const total = await prisma.restaurant.count({
+      where: {
+        name: {
+          contains: keyword ? keyword.trim() : undefined,
+        },
+        category: category !== 'ALL' ? category : undefined,
+      },
+    });
     const listRestaurant = await prisma.restaurant.findMany({
       relationLoadStrategy: 'join',
       include: {
@@ -22,14 +32,21 @@ export const getAllRestaurantController = publicProcedure
       },
       where: {
         name: {
-          search: keyword,
+          contains: keyword ? keyword.trim() : undefined,
         },
+        category: category !== 'ALL' ? category : undefined,
       },
       skip: offset,
       take: limit,
     });
 
-    return listRestaurant;
+    return {
+      meta_data: {
+        total,
+        length: listRestaurant.length,
+      },
+      listRestaurant,
+    };
   });
 export const addFavoriteRestaurantController = publicProcedure
   .input(

@@ -9,7 +9,7 @@ const RestaurantList = dynamic(
 export default async function RestaurantPage() {
   const restaurantList = await serverClient.getRestaurants({
     page_num: 1,
-    page_size: 10,
+    page_size: 6,
   });
   return (
     <div className="max-w-7xl sm:mx-auto mx-4 my-4 mt-5">

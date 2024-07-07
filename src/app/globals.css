@@ -68,3 +68,6 @@ body {
   background-color: #ffffff !important;
   -webkit-background-color: #ffffff !important;
 }
+.rcs-inner-handle {
+  color: #000 !important;
+}

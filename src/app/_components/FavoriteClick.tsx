@@ -7,15 +7,18 @@ import SpinLoading from './loading/spin-loading';
 export default function FavoriteClick({
   isFavorite,
   restaurant_id,
+  actionRefreshRestaurantList,
 }: {
   isFavorite: boolean;
   restaurant_id: string;
+  actionRefreshRestaurantList: () => void;
 }) {
   const [crrFavorite, setCrrFavorite] = useState<boolean>(isFavorite);
 
   const actionAddFavorite = trpc.addFavorite.useMutation({
     onSettled: () => {
       setCrrFavorite(!crrFavorite);
+      actionRefreshRestaurantList();
     },
   });
   return (
