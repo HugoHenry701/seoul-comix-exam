@@ -21,7 +21,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Provider>
           <Header />
-          <main className="lg:mt-[92px] mt-0">{children}</main>
+          <main className="lg:mt-[92px] lg:mb-0 mt-0 mb-24">{children}</main>
         </Provider>
       </body>
     </html>

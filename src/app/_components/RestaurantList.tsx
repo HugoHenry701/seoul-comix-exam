@@ -54,7 +54,6 @@ export default function RestaurantList({
   const [crrCategory, setCrrCategory] = useState<string>('ALL');
   const [hasMoreRestaurant, setHasMoreRestaurant] = useState<boolean>(true);
   const [crrPageSize, setCrrPageSize] = useState<number>(6);
-  console.log({ crrPageSize });
 
   //Handle
   const getListRestaurant = trpc.getRestaurants.useQuery(
@@ -117,14 +116,9 @@ export default function RestaurantList({
           <SpinLoading color="#000" height={30} width={30} position="center" />
         </div>
       ) : (
-        <div className="h-[750px] pb-28">
+        <div className="">
           {restaurantList && restaurantList.length > 0 ? (
-            <InfiniteScroll
-              next={actionNextListRestaurant}
-              isLoading={getListRestaurant.isLoading}
-              hasMore={hasMoreRestaurant}
-              spinColor="#000"
-            >
+            <div>
               <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-8">
                 <>
                   {restaurantList.map((restaurant, i) => (
@@ -186,7 +180,26 @@ export default function RestaurantList({
                   ))}
                 </>
               </div>
-            </InfiniteScroll>
+              {getListRestaurant.isLoading ? (
+                <SpinLoading
+                  color="#000"
+                  height={30}
+                  width={30}
+                  position="center"
+                />
+              ) : hasMoreRestaurant ? (
+                <div className="flex w-full justify-center my-8">
+                  <button
+                    onClick={actionNextListRestaurant}
+                    className="border border-black p-3 rounded-xl shadow-md"
+                  >
+                    더 로드하기
+                  </button>
+                </div>
+              ) : (
+                <></>
+              )}
+            </div>
           ) : (
             <div className="h-[350px] text-center content-center">
               <p>데이터를 찾을 수 없습니다</p>

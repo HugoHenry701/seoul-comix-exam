@@ -4,7 +4,7 @@ export default function HeaderMobile({ pathname }: { pathname: string }) {
   return (
     <>
       {/* Mobile Header */}
-      <div className="block lg:hidden bottom-0 fixed z-10 w-full">
+      <div className="block lg:hidden bottom-0 fixed z-20 w-full">
         <div className="bg-[#fff] border-b-[1px] border-[#C0C0C0] lg:border-[#000] w-full">
           <div className="mx-auto h-[60px] grid grid-cols-5 gap-4 px-4 pt-2  w-full relative  ">
             <Link href="/" className="flex flex-col items-center">
