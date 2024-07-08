@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a [Seoul Comix](https://nextjs.org/) exam project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+## Development Setup
 
-First, run the development server:
+First, install packages:
 
 ```bash
-npm run dev
-# or
+yarn
+```
+
+Second, copy env file
+
+```bash
+cp -rf .env.development.sample .env
+```
+
+Third, install infrastructure (database Postgres)
+
+```bash
+docker-compose up -d database
+```
+
+Fourth, migrate the database
+
+```bash
+yarn prisma:migrate-dev
+```
+
+Finally, run the development server:
+
+```bash
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+My answer for the exam is starting at [http://localhost:3000/restaurant](http://localhost:3000/restaurant) , please check it. The homepage is just for demo.
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Deploy application
 
-## Learn More
+Run the docker compose for all deployment:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+docker-compose up -d
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+The deployment is running with .env.production.sample, you can modify it for specific environment.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+**------ Thank you -------**
