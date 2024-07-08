@@ -8,13 +8,11 @@ import { serverClient } from '../_trpc/serverClient';
 import { useEffect, useState } from 'react';
 import SpinLoading from './loading/spin-loading';
 import InfiniteScroll from './infinite-scroll/InfiniteScroll';
+import SkeletonText from './skeleton/SkeletonText';
 const ImageGallery = dynamic(
-  () =>
-    import('@/app/_components/image-gallery/ImageGallery').then(
-      (mod) => mod.default
-    ),
+  () => import('@/app/_components/image-gallery/ImageGallery'),
   {
-    ssr: false,
+    ssr: true,
     loading: () => (
       <SkeletonImage
         heightClass="h-[350px] sm:h-[450px]"
@@ -25,10 +23,24 @@ const ImageGallery = dynamic(
   }
 );
 const FavoriteClick = dynamic(() => import('@/app/_components/FavoriteClick'), {
-  ssr: false,
+  ssr: true,
+  loading: () => (
+    <SkeletonText
+      heightClass="h-[35px]"
+      widthClass="w-[33px]"
+      className="rounded-full absolute right-4 top-4 z-10 "
+    />
+  ),
 });
 const CategoryTabs = dynamic(() => import('./CategoryTabs'), {
-  ssr: false,
+  ssr: true,
+  loading: () => (
+    <SkeletonText
+      heightClass="h-[50px]"
+      widthClass="w-[1280px]"
+      className="rounded-2xl my-4"
+    />
+  ),
 });
 export default function RestaurantList({
   initialRestaurantList,
@@ -105,7 +117,7 @@ export default function RestaurantList({
           <SpinLoading color="#000" height={30} width={30} position="center" />
         </div>
       ) : (
-        <div className="h-[650px] pb-28">
+        <div className="h-[750px] pb-28">
           {restaurantList && restaurantList.length > 0 ? (
             <InfiniteScroll
               next={actionNextListRestaurant}

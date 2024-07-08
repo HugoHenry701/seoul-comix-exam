@@ -1,12 +1,9 @@
-import dynamic from 'next/dynamic';
 import { serverClient } from '../_trpc/serverClient';
-const RestaurantList = dynamic(
-  () => import('@/app/_components/RestaurantList'),
-  {
-    ssr: false,
-  }
-);
+import RestaurantList from '../_components/RestaurantList';
+import { unstable_noStore } from 'next/cache';
+
 export default async function RestaurantPage() {
+  unstable_noStore();
   const restaurantList = await serverClient.getRestaurants({
     page_num: 1,
     page_size: 6,

@@ -44,7 +44,7 @@ const InfiniteScroll = ({
         {children}
         {hasMore ? (
           <>
-            {!isLoading ? (
+            {isLoading ? (
               <div className="flex justify-center items-center align-middle h-[128px]">
                 <SpinLoading
                   color={spinColor}
