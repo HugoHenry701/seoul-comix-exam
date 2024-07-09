@@ -37,3 +37,8 @@ next-env.d.ts
 
 # migrations logs
 prisma/migrations
+
+#docker package
+
+prisma/node_modules
+prisma/yarn.lock

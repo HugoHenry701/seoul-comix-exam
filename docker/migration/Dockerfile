@@ -9,13 +9,9 @@ WORKDIR /app
 
 # Install dependencies based on the preferred package manager
 
-COPY ./prisma  ./prisma
+COPY ./prisma  ./
 COPY .env.production.sample .env
-RUN yarn add prisma
-RUN yarn add npm-run-all
-RUN yarn add ts-node
-
-COPY package.json ./
+RUN yarn
 
 FROM deps AS runner
 WORKDIR /app

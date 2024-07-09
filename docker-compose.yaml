@@ -6,6 +6,8 @@ services:
     depends_on:
       database:
         condition: service_healthy
+    links:
+      - database
   backend:
     build:
       dockerfile: ./docker/app/Dockerfile
